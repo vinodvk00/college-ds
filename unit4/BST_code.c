@@ -12,6 +12,7 @@ void insert();
 void inorder_traversal(struct node *temp);
 void preorder_traversal(struct node *temp);
 void postorder_traversal(struct node *temp);
+void inorder_traversal_without_recursion(struct node *temp);
 
 int main(){
     int ch;
@@ -24,6 +25,8 @@ int main(){
             case 2 : inorder_traversal(root); break;
             case 3 : preorder_traversal(root); break;
             case 4 : postorder_traversal(root); break;
+            case 5 : inorder_traversal_without_recursion(root); break;
+            
         }
     }while(ch!=0);
 
@@ -105,4 +108,22 @@ void postorder_traversal(struct node *temp){
         postorder_traversal(temp->right);
         printf("%d ",temp->data);
     }
+}
+
+//inorder without recursion
+void inorder_traversal_without_recursion(struct node *temp){
+    struct node *stack[100];
+    int top = -1;
+    while(temp!=NULL || top!=-1){
+        while(temp!=NULL){
+            stack[++top] = temp;
+            temp = temp->left;
+
+        }
+        temp = stack[top--];
+        printf("%d ",temp->data);
+        temp = temp->right;
+
+    }
+
 }

@@ -1,9 +1,10 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-struct node{
+struct node
+{
     int data;
-    struct node *left,*right;
+    struct node *left, *right;
 };
 
 struct node *root = NULL, *n, *temp;
@@ -13,38 +14,65 @@ void inorder_traversal(struct node *temp);
 void preorder_traversal(struct node *temp);
 void postorder_traversal(struct node *temp);
 void inorder_traversal_without_recursion(struct node *temp);
+void preorder_traversal_without_recursion(struct node *temp);
+void postorder_traversal_without_recursion(struct node *temp);
 
-int main(){
+
+
+int main()
+{
     int ch;
     printf("0.exit 1.insert 2.inorder traversal 3.preorder traversal 4.postorder traversal\n");
-    do{
+    do
+    {
         printf("choice : ");
-        scanf("%d",&ch);
-        switch(ch){
-            case 1 : insert(); break;
-            case 2 : inorder_traversal(root); break;
-            case 3 : preorder_traversal(root); break;
-            case 4 : postorder_traversal(root); break;
-            case 5 : inorder_traversal_without_recursion(root); break;
-            
+        scanf("%d", &ch);
+        switch (ch)
+        {
+        case 1:
+            insert();
+            break;
+        case 2:
+            inorder_traversal(root);
+            break;
+        case 3:
+            preorder_traversal(root);
+            break;
+        case 4:
+            postorder_traversal(root);
+            break;
+        case 5:
+            inorder_traversal_without_recursion(root);
+            break;
+        case 6:
+            preorder_traversal_without_recursion(root);
+            break;
+        case 7:
+            postorder_traversal_without_recursion(root);
+            break;
         }
-    }while(ch!=0);
+    } while (ch != 0);
 
     return 0;
 }
 
-void insert(){
-    n = (struct node*)malloc(sizeof(struct node));
+void insert()
+{
+    n = (struct node *)malloc(sizeof(struct node));
     printf("Enter data : ");
-    scanf("%d",&n->data);
+    scanf("%d", &n->data);
     n->left = n->right = NULL;
 
-    if(root == NULL){
+    if (root == NULL)
+    {
         root = n;
-    }else{
+    }
+    else
+    {
         temp = root;
 
-        while(temp!=NULL){
+        while (temp != NULL)
+        {
             // int LorR;
             // printf("left-1 or right-0 : ");
             // scanf("%d",&LorR);
@@ -64,66 +92,114 @@ void insert(){
             //         break;
             //     }
             // }
-            if(n->data < temp->data){
-                if(!temp->left){
+            if (n->data < temp->data)
+            {
+                if (!temp->left)
+                {
                     temp->left = n;
                     return;
-                }else{
+                }
+                else
+                {
                     temp = temp->left;
                 }
-            }else{
-                if(!temp->right){
+            }
+            else
+            {
+                if (!temp->right)
+                {
                     temp->right = n;
                     return;
-                }else{
+                }
+                else
+                {
                     temp = temp->right;
                 }
             }
         }
     }
-
 }
 
-void inorder_traversal(struct node *temp){
-    if(temp!=NULL){
+void inorder_traversal(struct node *temp)
+{
+    if (temp != NULL)
+    {
         inorder_traversal(temp->left);
-        printf("%d ",temp->data);
+        printf("%d ", temp->data);
         inorder_traversal(temp->right);
-        
     }
 }
 
-void preorder_traversal(struct node *temp){
-    if(temp!=NULL){
-        printf("%d ",temp->data);
+void preorder_traversal(struct node *temp)
+{
+    if (temp != NULL)
+    {
+        printf("%d ", temp->data);
         preorder_traversal(temp->left);
         preorder_traversal(temp->right);
-        
     }
 }
 
-void postorder_traversal(struct node *temp){
-    if(temp!=NULL){
+void postorder_traversal(struct node *temp)
+{
+    if (temp != NULL)
+    {
         postorder_traversal(temp->left);
         postorder_traversal(temp->right);
-        printf("%d ",temp->data);
+        printf("%d ", temp->data);
     }
 }
 
-//inorder without recursion
-void inorder_traversal_without_recursion(struct node *temp){
+// inorder without recursion
+void inorder_traversal_without_recursion(struct node *temp)
+{
     struct node *stack[100];
     int top = -1;
-    while(temp!=NULL || top!=-1){
-        while(temp!=NULL){
+    while (temp != NULL || top != -1)
+    {
+        while (temp != NULL)
+        {
             stack[++top] = temp;
             temp = temp->left;
-
         }
         temp = stack[top--];
-        printf("%d ",temp->data);
+        printf("%d ", temp->data);
         temp = temp->right;
-
     }
-
 }
+
+// preorder withour resursion
+void preorder_traversal_without_recursion(struct node *temp)
+{
+    struct node *stack[100];
+    int top = -1;
+    while (temp != NULL || top != -1)
+    {
+        while (temp != NULL)
+        {
+            printf("%d ", temp->data);
+            stack[++top] = temp;
+            temp = temp->left;
+        }
+        temp = stack[top--];
+        temp = temp->right;
+    }
+}
+void postorder_traversal_without_recursion(struct node *temp)
+{
+    struct node *stack[100];
+    int top = -1;
+    while (temp != NULL || top != -1)
+    {
+        while (temp != NULL)
+        {
+            stack[++top] = temp;
+            temp = temp->left;
+        }
+        temp = stack[top--];
+        temp = temp->right;
+        printf("%d ", temp->data);
+    }
+}
+
+
